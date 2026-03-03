@@ -181,6 +181,10 @@ vi.mock("./components/TerminalPage.js", () => ({
   TerminalPage: () => <div data-testid="terminal-page">TerminalPage</div>,
 }));
 
+vi.mock("./components/RightPanel.js", () => ({
+  RegentSidebar: () => null,
+}));
+
 vi.mock("./components/ProcessPanel.js", () => ({
   ProcessPanel: () => <div data-testid="process-panel">ProcessPanel</div>,
 }));

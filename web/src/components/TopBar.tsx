@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
 import { useStore } from "../store.js";
 import { parseHash } from "../utils/routing.js";
 import { AiValidationToggle } from "./AiValidationToggle.js";
+import { hasTamboApiKey } from "./RegentPanel.js";
 
 type WorkspaceTab = "chat" | "diff" | "terminal" | "processes" | "editor";
 
@@ -24,6 +25,8 @@ export function TopBar() {
   const setSidebarOpen = useStore((s) => s.setSidebarOpen);
   const taskPanelOpen = useStore((s) => s.taskPanelOpen);
   const setTaskPanelOpen = useStore((s) => s.setTaskPanelOpen);
+  const regentPanelOpen = useStore((s) => s.regentPanelOpen);
+  const setRegentPanelOpen = useStore((s) => s.setRegentPanelOpen);
   const activeTab = useStore((s) => s.activeTab);
   const setActiveTab = useStore((s) => s.setActiveTab);
   const markChatTabReentry = useStore((s) => s.markChatTabReentry);
@@ -251,6 +254,22 @@ export function TopBar() {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-[15px] h-[15px]">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h18v18H3V3z" />
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 3v18" />
+              </svg>
+            </button>
+          )}
+          {hasTamboApiKey() && (
+            <button
+              onClick={() => setRegentPanelOpen(!regentPanelOpen)}
+              className={`flex items-center justify-center w-8 h-8 rounded-md transition-colors cursor-pointer ${
+                regentPanelOpen
+                  ? "text-cc-accent bg-cc-active"
+                  : "text-cc-muted hover:text-cc-fg hover:bg-cc-hover"
+              }`}
+              title="Toggle Regent panel"
+              aria-label="Toggle Regent panel"
+            >
+              <svg viewBox="0 0 16 16" fill="currentColor" className="w-[13px] h-[13px]">
+                <path d="M8 1l2.5 2.5L8 6 5.5 3.5 8 1zM1 8l2.5-2.5L6 8 3.5 10.5 1 8zm14 0l-2.5-2.5L10 8l2.5 2.5L15 8zM8 10l2.5 2.5L8 15l-2.5-2.5L8 10z" />
               </svg>
             </button>
           )}
