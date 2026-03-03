@@ -93,15 +93,15 @@ export function RegentSidebar() {
       {/* Mobile overlay backdrop */}
       {regentPanelOpen && (
         <div
-          className="fixed inset-0 bg-black/30 z-30 lg:hidden"
+          className="fixed top-11 inset-x-0 bottom-0 bg-black/30 z-30 lg:hidden"
           onClick={() => useStore.getState().setRegentPanelOpen(false)}
         />
       )}
 
       <div
         className={`
-          fixed inset-y-0 right-0 lg:relative lg:inset-auto z-40 lg:z-auto
-          h-full shrink-0 transition-all duration-200 pt-safe lg:pt-0
+          fixed top-11 bottom-0 right-0 lg:relative lg:inset-auto z-40 lg:z-auto
+          bg-cc-bg h-full shrink-0 transition-all duration-200 lg:pt-0
           ${regentPanelOpen ? "w-full lg:w-[340px] translate-x-0" : "w-0 translate-x-full lg:w-0 lg:translate-x-full"}
           overflow-hidden
         `}
