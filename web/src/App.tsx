@@ -11,6 +11,7 @@ import { TopBar } from "./components/TopBar.js";
 import { HomePage } from "./components/HomePage.js";
 import { TaskPanel } from "./components/TaskPanel.js";
 import { DiffPanel } from "./components/DiffPanel.js";
+import { RegentSidebar } from "./components/RightPanel.js";
 import { UpdateBanner } from "./components/UpdateBanner.js";
 import { SessionLaunchOverlay } from "./components/SessionLaunchOverlay.js";
 import { SessionTerminalDock } from "./components/SessionTerminalDock.js";
@@ -29,7 +30,6 @@ const CronManager = lazy(() => import("./components/CronManager.js").then((m) =>
 const AgentsPage = lazy(() => import("./components/AgentsPage.js").then((m) => ({ default: m.AgentsPage })));
 const TerminalPage = lazy(() => import("./components/TerminalPage.js").then((m) => ({ default: m.TerminalPage })));
 const ProcessPanel = lazy(() => import("./components/ProcessPanel.js").then((m) => ({ default: m.ProcessPanel })));
-
 
 function LazyFallback() {
   return (
@@ -284,24 +284,9 @@ export default function App() {
         </div>
       </div>
 
-      {/* Task panel — overlay on mobile, inline on desktop */}
+      {/* Task panel — overlay on mobile, inline on desktop (session view only) */}
       {currentSessionId && isSessionView && (
         <>
-          {!taskPanelOpen && (
-            <button
-              type="button"
-              onClick={() => useStore.getState().setTaskPanelOpen(true)}
-              className="hidden lg:flex fixed right-0 top-1/2 -translate-y-1/2 z-30 items-center gap-1 rounded-l-lg border border-r-0 border-cc-border bg-cc-card/95 backdrop-blur px-2 py-2 text-[11px] text-cc-muted hover:text-cc-fg hover:bg-cc-hover transition-colors cursor-pointer"
-              title="Open context panel"
-            >
-              <svg viewBox="0 0 16 16" fill="currentColor" className="w-3 h-3">
-                <path d="M3 2.5A1.5 1.5 0 014.5 1h7A1.5 1.5 0 0113 2.5v11a1.5 1.5 0 01-1.5 1.5h-7A1.5 1.5 0 013 13.5v-11zm2 .5v10h6V3H5z" />
-              </svg>
-              <span className="[writing-mode:vertical-rl] rotate-180 tracking-wide">Context</span>
-            </button>
-          )}
-
-          {/* Mobile overlay backdrop */}
           {taskPanelOpen && (
             <div
               className="fixed inset-0 bg-black/30 z-30 lg:hidden"
@@ -321,6 +306,9 @@ export default function App() {
           </div>
         </>
       )}
+
+      {/* Regent sidebar — persistent, always available */}
+      <RegentSidebar />
       <UpdateOverlay active={updateOverlayActive} />
     </div>
   );

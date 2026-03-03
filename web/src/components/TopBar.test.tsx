@@ -12,6 +12,10 @@ vi.mock("../ws.js", () => ({
   sendToSession: vi.fn(),
 }));
 
+vi.mock("./RegentPanel.js", () => ({
+  hasTamboApiKey: () => false,
+}));
+
 interface MockStoreState {
   currentSessionId: string | null;
   cliConnected: Map<string, boolean>;

@@ -131,6 +131,8 @@ interface AppState {
   homeResetKey: number;
   editorTabEnabled: boolean;
   activeTab: "chat" | "diff" | "terminal" | "processes" | "editor";
+  regentPanelOpen: boolean;
+  rightPanelActiveTab: string;
   chatTabReentryTickBySession: Map<string, number>;
   diffPanelSelectedFile: Map<string, string>;
 
@@ -222,6 +224,10 @@ interface AppState {
   dismissUpdate: (version: string) => void;
   setUpdateOverlayActive: (active: boolean) => void;
   setEditorTabEnabled: (enabled: boolean) => void;
+
+  // Regent panel actions
+  setRegentPanelOpen: (open: boolean) => void;
+  setRightPanelActiveTab: (tab: string) => void;
 
   // Diff panel actions
   setActiveTab: (tab: "chat" | "diff" | "terminal" | "processes" | "editor") => void;
@@ -376,6 +382,8 @@ export const useStore = create<AppState>((set) => ({
   homeResetKey: 0,
   editorTabEnabled: false,
   activeTab: "chat",
+  regentPanelOpen: typeof window !== "undefined" ? window.innerWidth >= 1280 : false,
+  rightPanelActiveTab: "",
   chatTabReentryTickBySession: new Map(),
   diffPanelSelectedFile: new Map(),
   quickTerminalOpen: false,
@@ -842,6 +850,8 @@ export const useStore = create<AppState>((set) => ({
   setUpdateOverlayActive: (active) => set({ updateOverlayActive: active }),
   setEditorTabEnabled: (enabled) => set({ editorTabEnabled: enabled }),
 
+  setRegentPanelOpen: (open) => set({ regentPanelOpen: open }),
+  setRightPanelActiveTab: (tab) => set({ rightPanelActiveTab: tab }),
   setActiveTab: (tab) => set({ activeTab: tab }),
   markChatTabReentry: (sessionId) =>
     set((s) => {
@@ -959,6 +969,8 @@ export const useStore = create<AppState>((set) => ({
       taskPanelConfigMode: false,
       editorTabEnabled: false,
       activeTab: "chat" as const,
+      regentPanelOpen: false,
+      rightPanelActiveTab: "",
       chatTabReentryTickBySession: new Map(),
       diffPanelSelectedFile: new Map(),
       quickTerminalOpen: false,
